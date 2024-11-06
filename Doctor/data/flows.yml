@@ -1,0 +1,59 @@
+flows:
+  health_assessment:
+    description: This flow triggers when the user greets the bot or mentions a health issue, guiding them through health assessment and doctor recommendation
+    name: health assessment
+    steps:
+      - action: utter_ask_health_issue
+
+      - collect: health_issue
+        description: the user's health issue
+
+      - action: action_provide_general_health_info
+
+      - action: action_follow_up_question
+        next:
+          - if: slots.problem_understood
+            then:
+              - action: action_recommend_doctor
+              - action: utter_ask_schedule_confirmation
+                next: booking
+          - else: follow_up
+
+      - id: follow_up
+        collect: follow_up_answer
+        description: User provides additional details about the health issue
+
+      - action: action_follow_up_answer
+        next:
+          - if: slots.problem_understood
+            then:
+              - action: action_provide_health_info
+              - action: action_recommend_doctor
+              - action: utter_ask_schedule_confirmation
+                next: booking
+          - else: follow_up
+
+      - id: booking
+        collect: schedule_confirmation
+        description: User confirms to schedule appointment
+        ask_before_filling: true
+        next:
+          - if: not slots.schedule_confirmation
+            then:
+              - action: utter_booking_cancelled
+                next: pdf_generation
+          - else: book_appointment
+
+      - id: book_appointment
+        action: action_book_appointment
+        next:
+          - if: slots.booking_successful
+            then:
+              - action: utter_booking_confirmed
+                next: pdf_generation
+          - else:
+              - action: utter_booking_failed
+                next: pdf_generation
+
+      - id: pdf_generation
+        action: action_generate_pdf

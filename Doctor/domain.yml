@@ -1,0 +1,60 @@
+version: "3.1"
+
+slots:
+  health_issue:
+    type: text
+    mappings:
+      - type: from_llm
+  follow_up_answer:
+    type: text
+    mappings:
+      - type: from_llm
+  problem_understood:
+    type: bool
+    mappings:
+      - type: custom  
+  selected_doctor:
+    type: text
+    mappings:
+      - type: custom
+        action: action_recommend_doctor
+  schedule_confirmation:
+    type: bool
+    mappings:
+      - type: from_llm
+  booking_successful:
+    type: bool
+    mappings:
+      - type: custom
+        action: action_book_appointment
+
+actions:
+  - action_provide_general_health_info
+  - action_provide_health_info
+  - action_follow_up_answer
+  - action_follow_up_question
+  - action_recommend_doctor
+  - action_book_appointment
+  - action_generate_pdf
+
+responses:
+  utter_ask_health_issue:
+    - text: "What seems to be the problem with your health?"
+
+  utter_ask_follow_up_answer:
+    - text: "Could you tell me more details about your symptoms or any other issues, like pain or duration?"
+
+  utter_ask_schedule_confirmation:
+    - text: "Would you like to book an appointment with Dr. {selected_doctor}?"
+
+  utter_booking_cancelled:
+    - text: "Your booking has been cancelled."
+
+  utter_booking_confirmed:
+    - text: "Your appointment has been booked successfully."
+
+  utter_booking_failed:
+    - text: "Sorry, something went wrong. The booking could not be completed."
+
+  utter_pdf_ready:
+    - text: "Your conversation summary is ready. [Download it here]({pdf_url})"
