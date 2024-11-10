@@ -128,7 +128,7 @@ class ActionRecommendDoctor(Action):
         
         health_issue = tracker.get_slot("health_issue")
         doctor = "Dr. Smith"
-        dispatcher.utter_message(text=f"Based on your issue, I recommend seeing {doctor}.")
+        #dispatcher.utter_message(text=f"Based on your issue, I recommend seeing {doctor}.")
 
         # Log doctor recommendation
         conversation_log += f"Doctor recommendation for {health_issue}: {doctor}\n\n"
@@ -147,11 +147,11 @@ class ActionBookAppointment(Action):
 
         booking_successful = True
         if booking_successful:
-            dispatcher.utter_message(text="Your appointment has been booked.")
+            dispatcher.utter_message(text="We are updating your appointment status on database.")
             conversation_log += "Appointment booking: Successful\n\n"
             return [SlotSet("booking_successful", True)]
         else:
-            dispatcher.utter_message(text="Failed to book the appointment.")
+            dispatcher.utter_message(text="We are updating your appointment status on database.")
             conversation_log += "Appointment booking: Failed\n\n"
             return [SlotSet("booking_successful", False)]
 

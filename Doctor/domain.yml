@@ -39,13 +39,19 @@ actions:
 
 responses:
   utter_ask_health_issue:
-    - text: "What seems to be the problem with your health?"
+    - text: "How can i assist you? What seems to be the problem with your health?"
+
+  utter_start:
+    - text: "Hello, Welcome to DoctorAI, I'm here to help you with your health."
 
   utter_ask_follow_up_answer:
     - text: "Could you tell me more details about your symptoms or any other issues, like pain or duration?"
 
   utter_ask_schedule_confirmation:
-    - text: "Would you like to book an appointment with Dr. {selected_doctor}?"
+    - text: "Would you like to book an appointment with {selected_doctor}?"
+
+  utter_response_on_doctor_recommendation:
+    - text: "Based on your issue and as per as our analysis we recommend you {selected_doctor}"
 
   utter_booking_cancelled:
     - text: "Your booking has been cancelled."
@@ -57,4 +63,4 @@ responses:
     - text: "Sorry, something went wrong. The booking could not be completed."
 
   utter_pdf_ready:
-    - text: "Your conversation summary is ready. [Download it here]({pdf_url})"
+    - text: "Your conversation summary is ready. Check your path folder for the PDF file."
